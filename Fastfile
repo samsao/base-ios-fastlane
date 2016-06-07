@@ -15,7 +15,13 @@ platform :ios do
 
   desc "Bump build number"
   private_lane :bumpBuildNumber do
-    increment_build_number # automatically increment by one
+    if is_ci 
+      increment_build_number(
+        build_number: ENV["BITRISE_BUILD_NUMBER"] # set a specific number
+      )
+    else
+      increment_build_number # automatically increment by one
+    end
     #Get version number
     get_version_number
   end
