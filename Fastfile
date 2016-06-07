@@ -43,7 +43,7 @@ platform :ios do
     end
     # Get the proper certificates
     match(type: "adhoc", 
-      readonly: false,
+      readonly: true,
       force_for_new_devices: true)
     # Build
     gym(scheme: ENV["SCHEME"],
