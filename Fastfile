@@ -69,11 +69,11 @@ platform :ios do
 
   private_lane :slack do |options|
     if ENV["SLACK_URL"] && ENV["SLACK_CHANNEL"]
-      slack(
+      slack({
         message: options["message"],
         success: true,
         channel: ENV["SLACK_CHANNEL"]
-      )
+      })
     end
   end
 
