@@ -42,7 +42,6 @@ platform :ios do
 
   desc "Create build and send to Crashlytics, use testers to set testers groups"
   private_lane :crashlyticsBuild do |options|
-    bumpBuildNumber
     testers = ""
     #TODO: Add the external testers here
     if options[:testers]
