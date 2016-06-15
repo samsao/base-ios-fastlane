@@ -26,7 +26,7 @@ platform :ios do
     get_version_number
   end
 
-  desc "Create build and send to testflight"
+  desc "Create build and send to Testflight"
   private_lane :betaBuild do
     # Get the proper certificates
     match(type: "appstore", 
@@ -40,6 +40,7 @@ platform :ios do
     deliver(force: true, skip_metadata: true)
   end
 
+  desc "Create build and send to Crashlytics, use testers to set testers groups"
   private_lane :crashlyticsBuild do |options|
     bumpBuildNumber
     testers = ""
@@ -93,13 +94,6 @@ platform :ios do
   end
 
   error do |lane, exception|
-     if ENV["SLACK_URL"] && ENV["SLACK_CHANNEL"]
-       slack({
-          message: "Build error: #{exception.message}",
-          success: false,
-          channel: ENV["SLACK_CHANNEL"]
-        })
-     end
   end
 
 end
