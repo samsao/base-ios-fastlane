@@ -1,7 +1,7 @@
 #update_fastlane
 
 # This is the minimum version number required.
-fastlane_version "1.94.1"
+fastlane_version "1.95.0"
 default_platform :ios
 
 platform :ios do
