@@ -13,11 +13,11 @@ platform :ios do
     cocoapods
   end
 
-  desc "Bump build number"
-  private_lane :bumpBuildNumber do
-    if is_ci 
+  desc "Bump build number, use build_number to set a specific build number"
+  private_lane :bumpBuildNumber do |options|
+    if options[:build_number]
       increment_build_number(
-        build_number: ENV["BITRISE_BUILD_NUMBER"] # set a specific number
+        build_number: options[:build_number]
       )
     else
       increment_build_number # automatically increment by one
