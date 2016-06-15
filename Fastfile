@@ -42,10 +42,10 @@ platform :ios do
 
   private_lane :crashlyticsBuild do |options|
     bumpBuildNumber
-    testers = "internal-samsao-ios"
+    testers = ""
     #TODO: Add the external testers here
     if options[:testers]
-      testers += ""
+      testers = options[:testers]
     end
     # Get the proper certificates
     match(type: "adhoc", 
@@ -62,18 +62,25 @@ platform :ios do
       crashlytics_path: './Pods/Crashlytics',
       api_token: ENV["CRASHLYTICS_API_TOKEN"],
       build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
-      groups: options[:testers],
+      groups: testers,
     )
   end
 
-
+  desc "Send a message to a slack channel, SLACK_URL and SLACK_CHANNEL have to be set before"
   private_lane :slack do |options|
     if ENV["SLACK_URL"] && ENV["SLACK_CHANNEL"]
-      slack({
-        message: options["message"],
+      if options[:message]
+        slack({
+        message: options[:message],
         success: true,
         channel: ENV["SLACK_CHANNEL"]
       })
+      else
+        slack({
+        success: true,
+        channel: ENV["SLACK_CHANNEL"]
+      })
+      end
     end
   end
 
