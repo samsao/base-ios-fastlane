@@ -94,6 +94,13 @@ platform :ios do
   end
 
   error do |lane, exception|
+    if ENV["SLACK_URL"] && ENV["SLACK_CHANNEL"]
+       slack({
+          message: "Build error: #{exception.message}",
+          success: false,
+          channel: ENV["SLACK_CHANNEL"]
+        })
+     end
   end
 
 end
