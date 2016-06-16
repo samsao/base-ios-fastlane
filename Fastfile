@@ -26,6 +26,11 @@ platform :ios do
     get_version_number
   end
 
+  desc "Run tests on the project"
+  lane :test do
+    scan(scheme: ENV["SCHEME"])
+  end
+
   desc "Create build and send to Testflight"
   private_lane :betaBuild do
     # Get the proper certificates
@@ -71,7 +76,7 @@ platform :ios do
     if ENV["SLACK_URL"] && ENV["SLACK_CHANNEL"]
       if options[:message]
         slack({
-        message: options[:message],
+        message: "foo",
         success: true,
         channel: ENV["SLACK_CHANNEL"]
       })
