@@ -89,6 +89,14 @@ platform :ios do
     end
   end
 
+  desc "Register devices for app"
+  lane :registerDevices do |options|
+    register_devices(
+      devices_file: options[:devices_file]
+    )
+  end
+
+
   ################
   # Success/Error:
   ################
