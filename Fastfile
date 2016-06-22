@@ -9,6 +9,10 @@ platform :ios do
   before_all do
     ensure_git_status_clean
     clear_derived_data
+
+    #Bundler
+    bundle_install
+    
     #Pod install
     cocoapods
   end
@@ -87,13 +91,6 @@ platform :ios do
       })
       end
     end
-  end
-
-  desc "Register devices for app"
-  lane :registerDevices do |options|
-    register_devices(
-      devices_file: options[:devices_file]
-    )
   end
 
 
