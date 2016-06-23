@@ -7,6 +7,8 @@ default_platform :ios
 platform :ios do
 
   before_all do
+    output = sh("git status")
+    puts output
     ensure_git_status_clean
     clear_derived_data
 
@@ -24,7 +26,9 @@ platform :ios do
         build_number: options[:build_number]
       )
     else
-      increment_build_number # automatically increment by one
+      increment_build_number(
+        build_number: 0
+      )
     end
     #Get version number
     get_version_number
