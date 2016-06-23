@@ -67,13 +67,13 @@ platform :ios do
         configuration: ENV["CONFIGURATION"],
         export_method: "ad-hoc",
         clean: true,
+        use_legacy_build_api: true,
         include_symbols: true,
     )
     crashlytics(
       crashlytics_path: './Pods/Crashlytics',
       api_token: ENV["CRASHLYTICS_API_TOKEN"],
       build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
-      use_legacy_build_api: true,
       groups: testers,
     )
   end
