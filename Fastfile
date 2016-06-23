@@ -73,6 +73,7 @@ platform :ios do
       crashlytics_path: './Pods/Crashlytics',
       api_token: ENV["CRASHLYTICS_API_TOKEN"],
       build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
+      use_legacy_build_api: true,
       groups: testers,
     )
   end
