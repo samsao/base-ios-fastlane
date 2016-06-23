@@ -67,7 +67,6 @@ platform :ios do
         configuration: ENV["CONFIGURATION"],
         export_method: "ad-hoc",
         clean: true,
-        use_legacy_build_api: true,
         include_symbols: true,
     )
     crashlytics(
