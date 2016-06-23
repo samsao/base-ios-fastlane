@@ -7,8 +7,6 @@ default_platform :ios
 platform :ios do
 
   before_all do
-    output = sh("git status")
-    puts output
     ensure_git_status_clean
     clear_derived_data
 
