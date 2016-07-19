@@ -47,6 +47,7 @@ platform :ios do
       configuration: ENV["CONFIGURATION"],
       clean: true,
       include_symbols: true,
+      use_legacy_build_api: true,
     )
     deliver(force: true, skip_metadata: true)
   end
@@ -68,6 +69,7 @@ platform :ios do
         export_method: "ad-hoc",
         clean: true,
         include_symbols: true,
+        use_legacy_build_api: true,
     )
     crashlytics(
       crashlytics_path: './Pods/Crashlytics',
