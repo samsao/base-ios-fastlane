@@ -79,25 +79,6 @@ platform :ios do
     )
   end
 
-  desc "Send a message to a slack channel, SLACK_URL and SLACK_CHANNEL have to be set before"
-  private_lane :slack do |options|
-    if ENV["SLACK_URL"] && ENV["SLACK_CHANNEL"]
-      if options[:message]
-        slack({
-        message: "foo",
-        success: true,
-        channel: ENV["SLACK_CHANNEL"]
-      })
-      else
-        slack({
-        success: true,
-        channel: ENV["SLACK_CHANNEL"]
-      })
-      end
-    end
-  end
-
-
   ################
   # Success/Error:
   ################
