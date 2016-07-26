@@ -32,7 +32,10 @@ platform :ios do
 
   desc "Run tests on the project"
   lane :test do
-    scan(scheme: ENV["SCHEME"])
+    scan(
+      scheme: ENV["SCHEME"],
+      destination: "OS=9.3,name=iPhone 5s"
+    )
   end
 
   desc "Create build and send to Testflight"
