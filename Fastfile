@@ -38,8 +38,8 @@ platform :ios do
     )
   end
 
-  desc "Create build and send to Testflight"
-  private_lane :betaBuild do
+  desc "Create build and send to Testflight. Use changelog as an option to put the changelog"
+  private_lane :betaBuild do |options|
     # Get the proper certificates
     match(type: "appstore", 
       readonly: true,
@@ -49,7 +49,21 @@ platform :ios do
       clean: true,
       include_symbols: true,
     )
-    deliver(force: true, skip_metadata: true)
+    pilot(changelog: options[:changelog])
+  end
+
+  desc "Create build and send to iTunes."
+  private_lane :releaseBuild do
+    # Get the proper certificates
+    match(type: "appstore", 
+      readonly: true,
+      force_for_new_devices: true)
+    gym(scheme: ENV["SCHEME"], 
+      configuration: ENV["CONFIGURATION"],
+      clean: true,
+      include_symbols: true,
+    )
+    deliver()
   end
 
   desc "Create build and send to Crashlytics, use testers to set testers groups"
