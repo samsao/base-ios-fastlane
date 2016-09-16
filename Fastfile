@@ -83,6 +83,7 @@ platform :ios do
     gym(scheme: ENV["SCHEME"],
         configuration: ENV["CONFIGURATION"],
         export_method: "ad-hoc",
+        use_legacy_api_build: true,
         clean: true,
         include_symbols: true,
     )
