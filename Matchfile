@@ -1,0 +1,4 @@
+git_url "git@github.com:samsao/yqb-certificates.git"
+
+app_identifier ENV["APP_ID"]
+username ENV["APPLE_EMAIL"] # Your Apple Developer Portal username
