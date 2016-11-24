@@ -6,10 +6,6 @@ platform :ios do
 
   before_all do
     ensure_git_status_clean
-  end
-  
-  desc "Runs bundle install and pod install and clears derived data"
-  private_lane :bundle_pod do
     clear_derived_data
 
     #Bundler
@@ -48,7 +44,6 @@ platform :ios do
   desc "Create build and send to Testflight. Use changelog as an option to put the changelog"
   private_lane :betaBuild do |options|
     # Get the proper certificates
-    bundle_pod
     match(type: "appstore", 
       readonly: true,
       force_for_new_devices: true)
@@ -63,7 +58,6 @@ platform :ios do
   desc "Create build and send to iTunes."
   private_lane :releaseBuild do
     # Get the proper certificates
-    bundle_pod
     match(type: "appstore", 
       readonly: true,
       force_for_new_devices: true)
