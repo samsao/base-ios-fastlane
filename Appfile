@@ -1,6 +1,0 @@
-# Apple ID
-apple_id ENV["APPLE_EMAIL"] # Apple email address
-app_identifier ENV["APP_ID"]
-
-# Team
-team_id ENV["TEAM_ID"]
