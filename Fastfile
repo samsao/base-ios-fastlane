@@ -14,6 +14,7 @@ platform :ios do
     #Pod install
     cocoapods(
       repo_update: true
+      use_bundle_exec: true
     )
   end
 
