@@ -12,9 +12,7 @@ platform :ios do
     bundle_install
     
     #Pod install
-    cocoapods(
-      repo_update: true
-      )
+    cocoapods
   end
 
   desc "Bump build number, use build_number to set a specific build number"
