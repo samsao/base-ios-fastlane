@@ -1,5 +1,7 @@
 fastlane documentation
 ================
+##  Use this branch to trigger pod repo update ##
+
 # Installation
 ```
 sudo gem install fastlane
