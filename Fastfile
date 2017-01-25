@@ -63,7 +63,7 @@ platform :ios do
       clean: true,
       include_symbols: true,
     )
-    deliver()
+    deliver(force: true)
   end
 
   desc "Create build and send to Crashlytics, use testers to set testers groups"
