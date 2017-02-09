@@ -10,7 +10,7 @@ platform :ios do
 
     #Bundler
     bundle_install
-    
+
     #Pod install
     cocoapods
   end
@@ -38,13 +38,21 @@ platform :ios do
     )
   end
 
+  desc "Overlays version number with 'Beta' tag"
+  private_lane :overlayVersion do |options|
+    badge(shield: options[:version], dark: true, shield_no_resize: true)
+  end
+
   desc "Create build and send to Testflight. Use changelog as an option to put the changelog"
   private_lane :betaBuild do |options|
     # Get the proper certificates
-    match(type: "appstore", 
+    match(type: "appstore",
       readonly: true,
       force_for_new_devices: true)
-    gym(scheme: ENV["SCHEME"], 
+
+    overlayVersion(version: "Version-0.0.3-green")
+
+    gym(scheme: ENV["SCHEME"],
       configuration: ENV["CONFIGURATION"],
       clean: true,
       include_symbols: true,
@@ -55,10 +63,10 @@ platform :ios do
   desc "Create build and send to iTunes."
   private_lane :releaseBuild do
     # Get the proper certificates
-    match(type: "appstore", 
+    match(type: "appstore",
       readonly: true,
       force_for_new_devices: true)
-    gym(scheme: ENV["SCHEME"], 
+    gym(scheme: ENV["SCHEME"],
       configuration: ENV["CONFIGURATION"],
       clean: true,
       include_symbols: true,
@@ -74,7 +82,7 @@ platform :ios do
       testers = options[:testers]
     end
     # Get the proper certificates
-    match(type: "adhoc", 
+    match(type: "adhoc",
       readonly: true,
       force_for_new_devices: true)
     # Build
