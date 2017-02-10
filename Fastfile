@@ -1,5 +1,5 @@
 # This is the minimum version number required.
-fastlane_version "1.98.0"
+fastlane_version "2.14.2"
 default_platform :ios
 
 platform :ios do
@@ -50,7 +50,8 @@ platform :ios do
       readonly: true,
       force_for_new_devices: true)
 
-    overlayVersion(version: "Version-0.0.3-green")
+    version = formattedVersion("0.0.3")
+    overlayVersion(version: version)
 
     gym(scheme: ENV["SCHEME"],
       configuration: ENV["CONFIGURATION"],
@@ -117,6 +118,10 @@ platform :ios do
           channel: ENV["SLACK_CHANNEL"]
         })
      end
+  end
+
+  def formattedVersion(version)
+    "Version-#{version}-orange"
   end
 
 end
