@@ -43,12 +43,17 @@ platform :ios do
     badge(shield: options[:version], dark: true, shield_no_resize: true)
   end
 
+  desc "Match helper"
+  private_lane :run_match do |options|
+    match(type: options[:matchtype],
+      readonly: true,
+      force_for_new_devices: true)
+  end
+
   desc "Create build and send to Testflight. Use changelog as an option to put the changelog"
   private_lane :betaBuild do |options|
     # Get the proper certificates
-    match(type: "appstore",
-      readonly: true,
-      force_for_new_devices: true)
+    run_match(matchtype: "appstore")
 
     version = formattedVersion("0.0.3")
     overlayVersion(version: version)
@@ -64,9 +69,8 @@ platform :ios do
   desc "Create build and send to iTunes."
   private_lane :releaseBuild do
     # Get the proper certificates
-    match(type: "appstore",
-      readonly: true,
-      force_for_new_devices: true)
+    run_match(matchtype: "appstore")
+
     gym(scheme: ENV["SCHEME"],
       configuration: ENV["CONFIGURATION"],
       clean: true,
@@ -77,15 +81,12 @@ platform :ios do
 
   desc "Create build and send to Crashlytics, use testers to set testers groups"
   private_lane :crashlyticsBuild do |options|
-    testers = ""
-    #TODO: Add the external testers here
-    if options[:testers]
-      testers = options[:testers]
-    end
+    testerEmails = options[:testers] ? options[:testers] : nil
+    testerGroups = options[:testerGroups] ? options[:testerGroups] : ['samsao']
+
     # Get the proper certificates
-    match(type: "adhoc",
-      readonly: true,
-      force_for_new_devices: true)
+    run_match(matchtype: "adhoc")
+
     # Build
     gym(scheme: ENV["SCHEME"],
         configuration: ENV["CONFIGURATION"],
@@ -98,8 +99,14 @@ platform :ios do
       crashlytics_path: './Pods/Crashlytics',
       api_token: ENV["CRASHLYTICS_API_TOKEN"],
       build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
-      groups: testers,
+      emails: testerEmails,
+      groups: testerGroups,
     )
+  end
+
+  desc "Sync certificates"
+  lane :certificates do
+    # implement in the sub fastlane
   end
 
   ################
