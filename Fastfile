@@ -82,7 +82,7 @@ platform :ios do
       configuration: ENV['CONFIGURATION'],
       clean: true,
       include_symbols: true,
-      export_method: 'ad-hoc',
+      export_method: 'app-store',
     )
 
     pilot(changelog: options[:changelog])
