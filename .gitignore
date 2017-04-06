@@ -1,0 +1,7 @@
+
+# Bundler
+bin/
+.bundle/
+
+# Fastlane
+report.xml
