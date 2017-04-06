@@ -23,7 +23,7 @@ platform :ios do
   desc 'Bump build number, use build_number to set a specific build number'
   private_lane :bump_build_number do |options|
     increment_build_number(
-      build_number: options[:build_number] || 0,
+      build_number: latest_testflight_build_number + 1 || options[:build_number],
     )
 
     get_version_number
@@ -82,6 +82,7 @@ platform :ios do
       configuration: ENV['CONFIGURATION'],
       clean: true,
       include_symbols: true,
+      export_method: 'app-store',
     )
 
     pilot(changelog: options[:changelog])
@@ -99,6 +100,7 @@ platform :ios do
       configuration: ENV['CONFIGURATION'],
       clean: true,
       include_symbols: true,
+      export_method: 'app-store',
     )
 
     deliver(force: true)
@@ -118,9 +120,9 @@ platform :ios do
     gym(
       scheme: ENV['SCHEME'],
       configuration: ENV['CONFIGURATION'],
-      export_method: 'ad-hoc',
       clean: true,
       include_symbols: true,
+      export_method: 'ad-hoc',
     )
 
     crashlytics(
