@@ -1,4 +1,7 @@
-## In progress
+## 0.3.0 (July 4, 2017)
+
+ * The `prepare` lane now performs a `pod repo update` before doing the
+   `pod install` lane to avoid problem of an out of sync pods repository.
 
  * Added a `bootstrap` lane used to setup the project which does, `prepare` and
    `sync_certificates`.
