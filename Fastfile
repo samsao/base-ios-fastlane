@@ -43,7 +43,7 @@ platform :ios do
   desc 'Prepare the project for building'
   lane :prepare do
     run_if_file_exists('Gemfile') { bundle_install }
-    run_if_file_exists('Podfile') { cocoapods }
+    run_if_file_exists('Podfile') { cocoapods(repo_update: true) }
   end
 
   desc 'Clean derived data and build directory'
