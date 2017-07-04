@@ -1,0 +1,51 @@
+---
+format_version: 1.4.0
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+description: |-
+  This wrapper is configure in bitrise.io editor as the script to run. What it
+  does mainly is to simply clone the repository and forward the execution of the
+  workflow to the real build file (bitrise.yml) which is hosted in this repository.
+
+  To work, main workflow here must also be present in bitrise.yml, so main workflows
+  must be kept synchronized between the two.
+
+  Also, any change made to this file must be **manually** added to bitrise.io editor.
+  Simply copy/paste the content of this file into the web editor and press save.
+
+  To test locally using bitrise CLI, while at project root directory, simply do:
+
+    bitrise run <workflow> -c bitrise.wrapper.yml
+
+  See http://devcenter.bitrise.io/tips-and-tricks/use-bitrise-yml-from-repository/
+  for details on the technique.
+
+trigger_map:
+  - push_branch: "develop"
+    workflow: "develop"
+  - pull_request_target_branch: "*"
+    pull_request_source_branch: "*"
+    workflow: "pr"
+
+workflows:
+  _run_from_repo:
+    steps:
+    - activate-ssh-key@3.1.1:
+        title: Activate SSH credentials
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@3.4.2:
+        title: Clone repository
+    - script@1.1.3:
+        title: Continue using repository bitrise.yml
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            bitrise run "${BITRISE_TRIGGERED_WORKFLOW_ID}"
+
+  develop:
+    after_run:
+    - _run_from_repo
+
+  pr:
+    after_run:
+    - _run_from_repo
