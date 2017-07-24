@@ -113,6 +113,7 @@ platform :ios do
       changelog: changelog,
       distribute_external: options[:distribute_external],
       skip_waiting_for_build_processing: options[:skip_waiting_for_build_processing],
+      groups: options[:testflight_groups],
     )
   end
 
