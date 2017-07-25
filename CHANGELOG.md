@@ -1,3 +1,7 @@
+## 0.4.0 (July 25, 2017)
+
+* Added the ability to pass `testflight_groups` parameter to the `publish_testflight` lane.
+
 ## 0.3.0 (July 4, 2017)
 
  * The `prepare` lane now performs a `pod repo update` before doing the
