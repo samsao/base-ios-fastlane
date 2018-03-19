@@ -202,6 +202,16 @@ platform :ios do
     !ENV['BITRISE_IO'].nil?
   end
 
+  desc 'Downloads dSYM from iTuneConnect and upload them to Crashlytics.'
+  lane :refresh_dsyms do
+    token_is_present = (ENV['CRASHLYTICS_API_TOKEN'] || ENV['GOOGLE_SERVICES_INFO_PLIST_PATH'])
+    UI.error 'Skipping dSYM upload because CRASHLYTICS_API_TOKEN or GOOGLE_SERVICES_INFO_PLIST_PATH is missing!' and next unless token_is_present
+
+    download_dsyms
+    upload_symbols_to_crashlytics
+    clean_build_artifacts
+  end
+
   ################
   # Success/Error:
   ################
