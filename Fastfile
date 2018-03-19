@@ -112,6 +112,8 @@ platform :ios do
     pilot(
       changelog: changelog,
       distribute_external: options[:distribute_external],
+      beta_app_description: options[:beta_app_description] || '',
+      beta_app_feedback_email: options[:beta_app_feedback_email] || 'test@samsao.co',
       skip_waiting_for_build_processing: options[:skip_waiting_for_build_processing],
       groups: options[:testflight_groups],
     )
