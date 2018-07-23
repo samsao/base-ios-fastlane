@@ -72,7 +72,7 @@ platform :ios do
     increment_bitrise_build_version if options[:strategy] == :bitrise
     increment_testflight_build_version if options[:strategy] == :testflight
 
-    get_version_number
+    get_version_number(target: get_target(options))
   end
 
   desc 'Run all lints'
@@ -87,7 +87,8 @@ platform :ios do
 
   desc 'Create build and send to Crashlytics.'
   private_lane :publish_crashlytics do |options|
-    overlay_version(version: formatted_version(options[:version_number] || get_version_number))
+    version = options[:version_number] || get_version_number(target: get_target(options))
+    overlay_version(version: formatted_version(version))
     build(match_type: 'adhoc', export_method: 'ad-hoc')
 
     crashlytics(
@@ -101,7 +102,8 @@ platform :ios do
 
   desc 'Create build and send to Testflight.'
   private_lane :publish_testflight do |options|
-    overlay_version(version: formatted_version(options[:version_number] || get_version_number))
+    version = options[:version_number] || get_version_number(target: get_target(options))
+    overlay_version(version: formatted_version(version))
     build(match_type: 'appstore', export_method: 'app-store')
 
     changelog = options[:changelog]
@@ -227,6 +229,14 @@ platform :ios do
 
   def formatted_version(version)
     "Version-#{version}-orange"
+  end
+
+  def get_option(options, key, default)
+    options[key] || default
+  end
+
+  def get_target(options = {})
+    get_option(options, :target, ENV['TARGET'])
   end
 
   def run_if_file_exists(file, &block)
