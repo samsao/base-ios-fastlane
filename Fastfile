@@ -124,7 +124,6 @@ platform :ios do
   desc 'Create build and send to iTunes'
   private_lane :publish_itunes do
     build(match_type: 'appstore', export_method: 'app-store')
-
     deliver(force: true)
   end
 
@@ -184,6 +183,7 @@ platform :ios do
       clean: true,
       include_symbols: true,
       export_method: options[:export_method],
+      export_options: options[:export_options],
     )
   end
 
